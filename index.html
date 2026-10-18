@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ginerta Suri Wijaya | Portofolio Teknik Informatika</title>
+  <meta name="description" content="Portofolio Ginerta Suri Wijaya, mahasiswa Teknik Informatika kelas TI25F.">
+
+  <!-- KEAMANAN 1: Content-Security-Policy.
+       Browser hanya mengeksekusi CSS/JS yang hash-nya (sha256) cocok dengan kode di bawah.
+       Script/CSS sisipan dari pihak lain diblokir, sehingga serangan XSS tidak bisa jalan.
+       PENTING: jika kamu mengedit isi blok CSS atau JavaScript, hash harus dihitung ulang (lihat catatan di akhir). -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DTFsOlaGjQYkj6f17mha/oC8zuQKnrXQb72po41rVaU='; style-src 'sha256-uFo+9HnpvNSSN+zjy0H7CZs995AxEYzXKTVX64G9LYI='; img-src data:; base-uri 'none'; form-action 'none'">
+  <!-- KEAMANAN 2: alamat halaman tidak dikirim ke situs lain -->
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ff4d8d'/%3E%3Ctext x='16' y='22' font-size='18' font-family='monospace' font-weight='700' text-anchor='middle' fill='white'%3EG%3C/text%3E%3C/svg%3E">
+
+  <!-- CSS tertanam (hash-nya terdaftar di CSP di atas) -->
+  <style>/* =====================================================
+   style.css - Portofolio Ginerta Suri Wijaya (TI25F)
+   Tanpa CDN: font memakai font bawaan sistem, ikon memakai SVG,
+   sehingga tetap tampil di server Debian tanpa internet.
+   ===================================================== */
+
+/* 1. VARIABEL WARNA - tema gelap (default) dan terang.
+      Mengganti tema cukup mengubah nilai di sini. */
+:root {
+  --bg: #13101c; --panel: #1d1929; --line: #302a42;
+  --text: #ece8f6; --muted: #a39cb8;
+  --accent: #ff4d8d; --accent2: #5eead4; --glow: .28; --r: 18px;
+  --sans: ui-sans-serif, system-ui, "Segoe UI", Roboto, "DejaVu Sans", Arial, sans-serif;
+  --mono: ui-monospace, "DejaVu Sans Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f7f4fb; --panel: #ffffff; --line: #e0d9ee;
+  --text: #1d1829; --muted: #5f5774;
+  --accent: #d1135a; --accent2: #0f766e; --glow: .14;
+  color-scheme: light;
+}
+
+/* 2. RESET & DASAR */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; transition: background .3s, color .3s; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent2); outline-offset: 3px; }
+.container { width: min(1100px, 92%); margin-inline: auto; }
+section { padding: 100px 0; }
+.sr { position: absolute; left: -9999px; }
+.sr-copy { position: fixed; top: 0; left: 0; opacity: 0; }
+h2 { font-size: clamp(1.9rem, 4.5vw, 2.9rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.15; margin-bottom: 12px; }
+.sub { color: var(--muted); max-width: 56ch; margin-bottom: 44px; }
+.ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Garis progres scroll di paling atas halaman */
+#bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 200; background: linear-gradient(90deg, var(--accent), var(--accent2)); transform-origin: left; transform: scaleX(0); }
+
+/* 3. NAVBAR (sticky) */
+header { position: sticky; top: 0; z-index: 100; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+nav { display: flex; align-items: center; gap: 12px; height: 68px; }
+.logo { font-family: var(--mono); font-weight: 700; margin-right: auto; }
+.logo b { color: var(--accent); }
+.menu { display: flex; gap: 26px; }
+.menu a { color: var(--muted); font-size: .92rem; padding: 4px 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+.menu a:hover, .menu a.active { color: var(--text); border-color: var(--accent); }
+.icon-btn { width: 40px; height: 40px; display: grid; place-items: center; background: none; border: 1px solid var(--line); border-radius: 50%; transition: border-color .2s, color .2s; }
+.icon-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.burger { display: none; }
+
+/* 4. HERO */
+.hero { position: relative; padding: 80px 0 100px; overflow: hidden; }
+.glow { position: absolute; width: 520px; height: 520px; border-radius: 50%; filter: blur(120px); opacity: var(--glow); pointer-events: none; }
+.glow.a { background: var(--accent); top: -160px; left: -160px; }
+.glow.b { background: #8b5cf6; bottom: -220px; right: -120px; }
+.hero-grid { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+.hi { font-family: var(--mono); color: var(--accent2); margin-bottom: 6px; }
+.hero h1 { font-size: clamp(2.6rem, 7vw, 4.8rem); line-height: 1.05; font-weight: 800; letter-spacing: -.035em; }
+.w { display: inline-block; white-space: nowrap; margin-right: .25em; }
+.ch { display: inline-block; }
+.hero h1 .ch { will-change: transform; }
+.typing { font-family: var(--mono); font-size: 1.1rem; color: var(--accent2); margin: 18px 0; min-height: 1.9em; }
+.cursor { display: inline-block; width: 9px; height: 1.1em; margin-left: 3px; vertical-align: middle; background: var(--accent2); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.lead { color: var(--muted); max-width: 46ch; }
+.btns { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 26px; border-radius: 999px; font-weight: 600; font-size: .95rem; border: 1px solid transparent; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.btn:hover { transform: translateY(-3px); }
+.btn-main { background: var(--accent); color: #fff; box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 40%, transparent); }
+.btn-ghost { border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* Jendela terminal */
+.terminal { background: #0d0b14; color: #ece8f6; border: 1px solid var(--line); border-radius: var(--r); box-shadow: 0 30px 70px rgba(0,0,0,.4); overflow: hidden; }
+.term-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: #1d1929; border-bottom: 1px solid #302a42; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+.term-bar small { margin-left: auto; font-family: var(--mono); color: #a39cb8; font-size: .75rem; }
+.term-body { padding: 22px; font-family: var(--mono); font-size: .86rem; line-height: 1.9; min-height: 290px; }
+.term-body .p { color: #5eead4; } .term-body .k { color: #ff4d8d; }
+.term-body .line { opacity: 0; animation: show .01s forwards; }
+@keyframes show { to { opacity: 1; } }
+
+/* 5. STRIP TEKS BERGERAK (digerakkan oleh scroll lewat JavaScript) */
+.strip { overflow: hidden; border-block: 1px solid var(--line); padding: 18px 0; }
+.strip-track { display: flex; width: max-content; font-size: clamp(2.2rem, 7vw, 5rem); font-weight: 800; letter-spacing: -.02em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1.5px var(--muted); will-change: transform; }
+.strip-track span { padding-right: .6em; }
+.strip-track span:nth-child(3n) { color: var(--accent); -webkit-text-stroke: 0; }
+
+/* 6. ABOUT */
+.about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
+.about-grid p { color: var(--muted); }
+.about-grid p + p { margin-top: 16px; }
+.id-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 30px; position: relative; }
+.id-card::before { content: ""; position: absolute; left: 0; top: 24px; bottom: 24px; width: 4px; background: var(--accent); border-radius: 0 4px 4px 0; }
+.avatar { width: 80px; height: 80px; border-radius: 50%; display: grid; place-items: center; font-size: 1.9rem; font-weight: 800; color: #fff; background: linear-gradient(135deg, var(--accent), #8b5cf6); margin-bottom: 18px; }
+.id-card dl { display: grid; grid-template-columns: 80px 1fr; gap: 10px 14px; font-size: .93rem; }
+.id-card dt { color: var(--muted); }
+.id-card dd { font-family: var(--mono); font-size: .88rem; font-weight: 600; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+.stat { border-top: 2px solid var(--accent); padding-top: 10px; }
+.stat b { display: block; font-size: 2rem; line-height: 1.1; }
+.stat span { color: var(--muted); font-size: .85rem; }
+
+/* 7. PERJALANAN BELAJAR (timeline, garis terisi mengikuti scroll) */
+.tl { position: relative; padding-left: 44px; --tl: 0; }
+.tl::before, .tl::after { content: ""; position: absolute; left: 11px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.tl::after { background: linear-gradient(var(--accent), var(--accent2)); transform-origin: top; transform: scaleY(var(--tl)); }
+.tl-item { position: relative; padding-bottom: 34px; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot { position: absolute; left: -44px; top: 22px; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 2px solid var(--line); z-index: 1; transition: border-color .3s, background .3s, box-shadow .3s; }
+.tl-item.on .tl-dot { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 22%, transparent); }
+.tl-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 24px 26px; }
+.tl-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.tl-head h3 { font-size: 1.25rem; }
+.lang { font-family: var(--mono); font-size: .8rem; font-weight: 700; padding: 3px 12px; border-radius: 999px; background: var(--accent); color: #fff; }
+.now { font-size: .78rem; color: var(--accent2); border: 1px solid var(--accent2); border-radius: 999px; padding: 2px 10px; }
+.tl-term { color: var(--muted); font-size: .85rem; }
+.tl-card p.d { margin: 10px 0 14px; color: var(--muted); max-width: 64ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li { font-size: .8rem; padding: 4px 12px; border: 1px solid var(--line); border-radius: 8px; transition: border-color .2s, color .2s; }
+.chips li:hover { border-color: var(--accent2); color: var(--accent2); }
+
+/* 8. SKILLS */
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px 56px; }
+.skill-top { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; font-size: .95rem; }
+.skill-top small { font-family: var(--mono); color: var(--muted); font-size: .8rem; font-weight: 400; }
+.track { height: 10px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.fill { height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 1.3s cubic-bezier(.2,.8,.2,1); }
+
+/* 9. PROYEK */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; display: flex; flex-direction: column; transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .2s, border-color .25s; }
+.card:hover { border-color: var(--accent); }
+.card-art { height: 150px; display: grid; place-items: center; font-family: var(--mono); font-size: 2.6rem; font-weight: 700; color: #fff; }
+.art1 { background: linear-gradient(135deg, #ff4d8d, #8b5cf6); }
+.art2 { background: linear-gradient(135deg, #0ea5e9, #5eead4); }
+.art3 { background: linear-gradient(135deg, #f59e0b, #ff4d8d); }
+.card-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card h3 { font-size: 1.1rem; }
+.card p { color: var(--muted); font-size: .9rem; flex: 1; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { font-family: var(--mono); font-size: .72rem; padding: 3px 10px; border-radius: 6px; background: color-mix(in srgb, var(--accent2) 14%, transparent); color: var(--accent2); }
+
+/* 10. INFO & KONTAK */
+.info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 28px; }
+.panel h3 { margin-bottom: 16px; font-size: 1.1rem; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: .92rem; }
+.row span:first-child { color: var(--muted); }
+.row b { font-family: var(--mono); font-weight: 600; font-size: .85rem; text-align: right; overflow-wrap: anywhere; }
+.copy { display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; font-size: .78rem; transition: border-color .2s, color .2s; }
+.copy:hover, .copy.ok { border-color: var(--accent2); color: var(--accent2); }
+.copy .ico { width: 14px; height: 14px; }
+
+/* 11. FOOTER */
+footer { border-top: 1px solid var(--line); padding: 28px 0; text-align: center; color: var(--muted); font-size: .88rem; }
+
+/* 12. ANIMASI MUNCUL - hanya aktif bila JavaScript jalan (class .js),
+       sehingga konten tidak pernah hilang kalau JS dimatikan. */
+.js .hero h1 .ch { animation: rise .8s cubic-bezier(.2,.8,.2,1) backwards; animation-delay: calc(var(--i) * 45ms); }
+@keyframes rise { from { opacity: 0; transform: translateY(70%) rotate(6deg); } }
+.js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s, transform .7s; }
+.js .reveal.in { opacity: 1; transform: none; }
+.js h2 .ch { opacity: 0; transform: translateY(65%); transition: opacity .5s, transform .6s cubic-bezier(.2,.8,.2,1); transition-delay: calc(var(--i) * 28ms); }
+.js h2.in .ch { opacity: 1; transform: none; }
+
+/* 13. RESPONSIVE */
+@media (max-width: 900px) {
+  .hero-grid, .about-grid, .skills-grid, .info-grid { grid-template-columns: 1fr; }
+  .cards { grid-template-columns: 1fr; }
+  section { padding: 72px 0; }
+}
+@media (max-width: 720px) {
+  .burger { display: grid; }
+  .menu { position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); max-height: 0; overflow: hidden; visibility: hidden; transition: max-height .3s, visibility .3s; }
+  .menu.open { max-height: 360px; visibility: visible; }
+  .menu a { display: block; padding: 14px 4%; border: 0; }
+  .stats { grid-template-columns: 1fr 1fr 1fr; }
+}
+/* Hormati pengguna yang menonaktifkan animasi */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .reveal, .js h2 .ch { opacity: 1; transform: none; }
+  .fill { width: var(--w); }
+}
+</style>
+</head>
+
+<body>
+  <!-- Kumpulan ikon SVG (pengganti FontAwesome, tidak perlu internet) -->
+  <svg width="0" height="0" class="sr" aria-hidden="true">
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></symbol>
+    <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  </svg>
+
+  <div id="bar" aria-hidden="true"></div>
+
+  <!-- ===== NAVBAR (menempel di atas) ===== -->
+  <header>
+    <nav class="container">
+      <a href="#home" class="logo">~/<b>ginerta</b></a>
+      <ul class="menu" id="menu">
+        <li><a href="#home">Beranda</a></li>
+        <li><a href="#about">Tentang</a></li>
+        <li><a href="#journey">Perjalanan</a></li>
+        <li><a href="#skills">Keahlian</a></li>
+        <li><a href="#projects">Proyek</a></li>
+        <li><a href="#info">Info</a></li>
+      </ul>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Ganti tema terang/gelap"><svg class="ico"><use href="#i-theme"/></svg></button>
+      <button class="icon-btn burger" id="burger" type="button" aria-label="Buka menu" aria-expanded="false"><svg class="ico"><use href="#i-menu"/></svg></button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+      <div class="glow a"></div><div class="glow b"></div>
+      <div class="container hero-grid">
+        <div>
+          <p class="hi">Hi, I'm</p>
+          <!-- Huruf pada nama dipecah JS agar bisa bergerak saat scroll -->
+          <h1 data-split id="heroName">Ginerta Suri Wijaya</h1>
+          <div class="typing" aria-live="off"><span id="typed">Mahasiswa Teknik Informatika</span><span class="cursor"></span></div>
+          <p class="lead">Saya membangun hal-hal yang berjalan di balik layar: kode, server, dan jaringan. Website ini berjalan di server Debian yang saya konfigurasi sendiri.</p>
+          <div class="btns">
+            <a href="#info" class="btn btn-main">Hubungi Saya</a>
+            <a href="#projects" class="btn btn-ghost">Lihat Proyek</a>
+          </div>
+        </div>
+        <div class="terminal" aria-hidden="true">
+          <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><small>ginerta@debian: ~</small></div>
+          <div class="term-body" id="term"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Teks bergerak: posisinya mengikuti scroll -->
+    <div class="strip" aria-hidden="true"><div class="strip-track" id="track">
+      <span>Java</span><span>Python</span><span>JavaScript</span><span>Node.js</span><span>Linux</span><span>Jaringan</span>
+      <span>Java</span><span>Python</span><span>JavaScript</span><span>Node.js</span><span>Linux</span><span>Jaringan</span>
+    </div></div>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+      <div class="container about-grid">
+        <div class="reveal">
+          <h2 data-split>Tentang saya</h2>
+          <p>Saya Ginerta Suri Wijaya, mahasiswa Teknik Informatika kelas TI25F. Perjalanan saya dimulai dari Java di semester 1, lalu Python di semester 2, dan sekarang saya mendalami JavaScript dengan Node.js.</p>
+          <p>Selain pemrograman, saya tertarik pada Linux, jaringan komputer, dan keamanan informasi. Karena itu portofolio ini saya tayangkan langsung dari web server Debian.</p>
+          <div class="stats">
+            <div class="stat"><b data-count="3">3</b><span>Semester</span></div>
+            <div class="stat"><b data-count="23">23</b><span>Mata kuliah</span></div>
+            <div class="stat"><b data-count="3">3</b><span>Bahasa pemrograman</span></div>
+          </div>
+        </div>
+        <aside class="id-card reveal">
+          <div class="avatar" aria-hidden="true">G</div>
+          <dl>
+            <dt>Nama</dt><dd>Ginerta Suri Wijaya</dd>
+            <dt>NIM</dt><dd>20250040180</dd>
+            <dt>Jurusan</dt><dd>Teknik Informatika</dd>
+            <dt>Kelas</dt><dd>TI25F</dd>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== PERJALANAN (urutan semester, jadi memakai timeline) ===== -->
+    <section id="journey">
+      <div class="container">
+        <div class="reveal"><h2 data-split>Perjalanan belajar</h2><p class="sub">Tiga semester, tiga bahasa pemrograman, dan semua mata kuliah yang sudah dan sedang saya tempuh.</p></div>
+        <ol class="tl" id="tl">
+          <li class="tl-item reveal"><span class="tl-dot"></span><div class="tl-card">
+            <div class="tl-head"><h3>Semester 1</h3><span class="lang">Java</span></div>
+            <p class="tl-term">Ganjil 2025/2026</p>
+            <p class="d">Fondasi logika dan pemrograman: algoritma, struktur data, serta dasar arsitektur komputer.</p>
+            <ul class="chips"><li>Algoritma dan Struktur Data</li><li>Organisasi dan Arsitektur Komputer</li><li>Logika Informatika</li><li>Kalkulus</li><li>Statistika dan Probabilitas</li><li>Bahasa Inggris Akademik</li><li>Pendidikan Pancasila</li></ul>
+          </div></li>
+          <li class="tl-item reveal"><span class="tl-dot"></span><div class="tl-card">
+            <div class="tl-head"><h3>Semester 2</h3><span class="lang">Python</span></div>
+            <p class="tl-term">Genap 2025/2026</p>
+            <p class="d">Mengenal sistem operasi dan basis data, sambil menulis program dengan Python.</p>
+            <ul class="chips"><li>Dasar Pemrograman</li><li>Sistem Operasi</li><li>Basis Data</li><li>Aljabar Linier</li><li>Matematika Diskrit</li><li>Bahasa Inggris Profesi</li><li>Pendidikan Kewarganegaraan</li><li>Kenusaputraan</li></ul>
+          </div></li>
+          <li class="tl-item reveal"><span class="tl-dot"></span><div class="tl-card">
+            <div class="tl-head"><h3>Semester 3</h3><span class="lang">JavaScript + Node.js</span><span class="now">Sedang berjalan</span></div>
+            <p class="tl-term">Ganjil 2026/2027</p>
+            <p class="d">Pemrograman berbasis platform dengan Node.js, ditambah jaringan, keamanan informasi, dan sistem terdistribusi.</p>
+            <ul class="chips"><li>Pemrograman Berbasis Platform</li><li>Jaringan Komputer dan Keamanan Informasi</li><li>Sistem Paralel dan Terdistribusi</li><li>Rekayasa Perangkat Lunak</li><li>Interaksi Manusia dan Komputer</li><li>Kompleksitas Algoritma</li><li>Metode Numerik</li><li>Bahasa Indonesia dan Budaya</li></ul>
+          </div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS ===== -->
+    <section id="skills">
+      <div class="container">
+        <div class="reveal"><h2 data-split>Keahlian</h2><p class="sub">Tingkat kemampuan saat ini. Angka di kanan menunjukkan seberapa jauh saya sudah menguasainya.</p></div>
+        <div class="skills-grid">
+          <!-- data-level = persentase bar. Silakan sesuaikan -->
+          <div class="reveal"><div class="skill-top"><span>Java</span><small>Semester 1</small></div><div class="track"><div class="fill" data-level="70"></div></div></div>
+          <div class="reveal"><div class="skill-top"><span>Python</span><small>Semester 2</small></div><div class="track"><div class="fill" data-level="70"></div></div></div>
+          <div class="reveal"><div class="skill-top"><span>JavaScript dan Node.js</span><small>Sedang dipelajari</small></div><div class="track"><div class="fill" data-level="55"></div></div></div>
+          <div class="reveal"><div class="skill-top"><span>Linux Debian dan Web Server</span><small>Praktik server</small></div><div class="track"><div class="fill" data-level="65"></div></div></div>
+          <div class="reveal"><div class="skill-top"><span>Jaringan Komputer</span><small>Dasar</small></div><div class="track"><div class="fill" data-level="60"></div></div></div>
+          <div class="reveal"><div class="skill-top"><span>HTML dan CSS</span><small>Dasar</small></div><div class="track"><div class="fill" data-level="80"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+      <div class="container">
+        <div class="reveal"><h2 data-split>Proyek</h2><p class="sub">Contoh pekerjaan dari perkuliahan. Arahkan kursor ke kartu untuk melihat efek miringnya.</p></div>
+        <div class="cards">
+          <article class="card reveal"><div class="card-art art1" aria-hidden="true">$ _</div><div class="card-body">
+            <h3>Web Server Debian</h3><p>Instalasi Apache/Nginx di Debian untuk menayangkan portofolio ini, lengkap dengan pengamanan header dan firewall.</p>
+            <div class="tags"><span>Debian</span><span>Apache</span><span>Nginx</span></div></div></article>
+          <article class="card reveal"><div class="card-art art2" aria-hidden="true">{ }</div><div class="card-body">
+            <h3>Latihan Node.js</h3><p>Program sederhana dengan Node.js dari mata kuliah Pemrograman Berbasis Platform, sebagai lanjutan dari Java dan Python.</p>
+            <div class="tags"><span>JavaScript</span><span>Node.js</span><span>npm</span></div></div></article>
+          <article class="card reveal"><div class="card-art art3" aria-hidden="true">&lt;/&gt;</div><div class="card-body">
+            <h3>Keamanan Jaringan</h3><p>Praktik dasar mengamankan server: akses SSH, firewall, dan pembatasan layanan yang tidak diperlukan.</p>
+            <div class="tags"><span>SSH</span><span>UFW</span><span>Hardening</span></div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INFO & KONTAK (berfungsi tanpa internet) ===== -->
+    <section id="info">
+      <div class="container">
+        <div class="reveal"><h2 data-split>Info dan kontak</h2><p class="sub">Tombol salin bekerja tanpa internet. Data server di samping dibaca langsung dari browser Anda.</p></div>
+        <div class="info-grid">
+          <div class="panel reveal">
+            <h3>Data mahasiswa</h3>
+            <div class="row"><span>Nama</span><b>Ginerta Suri Wijaya</b><button class="copy" type="button" data-copy="Ginerta Suri Wijaya"><svg class="ico"><use href="#i-copy"/></svg><span>Salin</span></button></div>
+            <div class="row"><span>NIM</span><b>20250040180</b><button class="copy" type="button" data-copy="20250040180"><svg class="ico"><use href="#i-copy"/></svg><span>Salin</span></button></div>
+            <div class="row"><span>Kelas</span><b>TI25F</b><button class="copy" type="button" data-copy="TI25F"><svg class="ico"><use href="#i-copy"/></svg><span>Salin</span></button></div>
+            <!-- GANTI alamat email di bawah (dua tempat) dengan email kampus kamu -->
+            <div class="row"><span>Email</span><b>ginerta_suri_ti25@nusaputra.ac.id</b><button class="copy" type="button" data-copy="email@kampus.ac.id"><svg class="ico"><use href="#i-copy"/></svg><span>Salin</span></button></div>
+          </div>
+          <div class="panel reveal">
+            <h3>Info server dan browser</h3>
+            <div class="row"><span>Waktu</span><b id="clock">--:--:--</b></div>
+            <div class="row"><span>Alamat server</span><b id="host">-</b></div>
+            <div class="row"><span>Protokol</span><b id="proto">-</b></div>
+            <div class="row"><span>Ukuran layar</span><b id="screen">-</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container">&copy; 2026 Ginerta Suri Wijaya &middot; TI25F &middot; Teknik Informatika</div></footer>
+
+  <!-- JavaScript tertanam; diletakkan di akhir body agar HTML sudah terbaca saat dijalankan -->
+  <script>/* =====================================================
+   script.js - Portofolio Ginerta Suri Wijaya (TI25F)
+   JavaScript murni. Keamanan: tidak memakai innerHTML, eval,
+   atau inline event; semua teks dimasukkan lewat textContent.
+   ===================================================== */
+(() => {
+  'use strict'; // mode ketat: mencegah kesalahan umum
+
+  const d = document, root = d.documentElement;
+  root.classList.add('js'); // memberi tahu CSS bahwa JavaScript aktif
+  const $ = (s, c = d) => c.querySelector(s);
+  const $$ = (s, c = d) => [...c.querySelectorAll(s)];
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches; // pengguna minta animasi minim
+
+  /* --- A. TEMA TERANG/GELAP (pilihan disimpan di browser) --- */
+  let saved = null;
+  try { saved = localStorage.getItem('tema'); } catch (e) { /* storage bisa diblokir */ }
+  const setTheme = t => { root.dataset.theme = t; };
+  setTheme(saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  $('#themeBtn').addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    try { localStorage.setItem('tema', next); } catch (e) {}
+  });
+
+  /* --- B. MENU HAMBURGER (HP) --- */
+  const menu = $('#menu'), burger = $('#burger');
+  burger.addEventListener('click', () => burger.setAttribute('aria-expanded', menu.classList.toggle('open')));
+  menu.addEventListener('click', e => { if (e.target.closest('a')) { menu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); } });
+
+  /* --- C. MEMECAH TEKS JADI HURUF (untuk animasi per huruf) ---
+     Setiap kata dibungkus .w agar tidak terpotong, tiap huruf dibungkus .ch */
+  $$('[data-split]').forEach(el => {
+    const text = el.textContent.trim();
+    el.setAttribute('aria-label', text); // pembaca layar membaca teks utuh
+    el.textContent = '';
+    let i = 0;
+    text.split(' ').forEach(word => {
+      const w = d.createElement('span'); w.className = 'w'; w.setAttribute('aria-hidden', 'true');
+      [...word].forEach(c => { const s = d.createElement('span'); s.className = 'ch'; s.textContent = c; s.style.setProperty('--i', i++); w.appendChild(s); });
+      el.appendChild(w);
+    });
+  });
+
+  /* --- D. EFEK MENGETIK --- */
+  const words = ['Mahasiswa Teknik Informatika', 'Java → Python → Node.js', 'Linux & Web Server Enthusiast'];
+  const typed = $('#typed');
+  let wi = 0, ci = 0, del = false;
+  (function type() {
+    const w = words[wi];
+    typed.textContent = w.slice(0, ci);
+    if (!del && ci === w.length) { del = true; return setTimeout(type, 1600); }
+    if (del && ci === 0) { del = false; wi = (wi + 1) % words.length; }
+    ci += del ? -1 : 1;
+    setTimeout(type, del ? 35 : 75);
+  })();
+
+  /* --- E. TERMINAL OTOMATIS (dibuat dengan DOM, bukan innerHTML) ---
+     Tiap baris: daftar [kelas, teks]. 'p' = prompt, 'k' = kunci, '' = biasa */
+  const P = ['p', 'ginerta@debian:~$ '];
+  const lines = [
+    [P, ['', 'whoami']], [['', 'ginerta']],
+    [P, ['', 'cat profil.txt']],
+    [['k', 'nim     '], ['', ': 20250040180']],
+    [['k', 'kelas   '], ['', ': TI25F']],
+    [['k', 'bahasa  '], ['', ': Java, Python, JavaScript']],
+    [P, ['', 'systemctl status apache2']],
+    [['p', '● '], ['', 'apache2.service - '], ['p', 'active (running)']]
+  ];
+  const term = $('#term');
+  lines.forEach((segs, i) => {
+    const row = d.createElement('div'); row.className = 'line';
+    row.style.animationDelay = (0.5 + i * 0.5) + 's'; // muncul bergantian
+    segs.forEach(([cls, txt]) => { const s = d.createElement('span'); if (cls) s.className = cls; s.textContent = txt; row.appendChild(s); });
+    term.appendChild(row);
+  });
+
+  /* --- F. MUNCUL SAAT SCROLL, ISI PROGRESS BAR, HITUNG ANGKA --- */
+  $$('.fill').forEach(b => b.style.setProperty('--w', b.dataset.level + '%'));
+  function countUp(el) {
+    const to = +el.dataset.count, t0 = performance.now();
+    if (calm) { el.textContent = to; return; }
+    (function step(now) {
+      const p = Math.min((now - t0) / 1200, 1);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); // melambat di akhir
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target;
+      el.classList.add('in');
+      $$('.fill', el).forEach(b => { b.style.width = b.dataset.level + '%'; });
+      $$('[data-count]', el).forEach(countUp);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.15 });
+  $$('.reveal, h2[data-split]').forEach(el => io.observe(el));
+
+  /* --- G. MENU AKTIF SESUAI POSISI SCROLL --- */
+  const links = $$('.menu a');
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  $$('section[id]').forEach(s => spy.observe(s));
+
+  /* --- H. ANIMASI YANG DIGERAKKAN OLEH SCROLL ---
+     requestAnimationFrame menjaga animasi tetap halus (maks 1x per frame). */
+  const bar = $('#bar'), track = $('#track'), tl = $('#tl');
+  const heroCh = $$('#heroName .ch'), tlItems = $$('.tl-item');
+  let half = 0, ticking = false;
+  const measure = () => { half = track.scrollWidth / 2; };
+  function frame() {
+    ticking = false;
+    const y = scrollY, max = root.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (max > 0 ? y / max : 0) + ')'; // progres halaman
+    if (!calm) {
+      track.style.transform = 'translate3d(' + (-((y * 0.6) % half)) + 'px,0,0)'; // teks bergerak
+      if (y < innerHeight) heroCh.forEach((c, i) => { // nama bergelombang
+        c.style.transform = 'translateY(' + (Math.sin(y / 80 + i * 0.55) * Math.min(y / 14, 10)) + 'px)';
+      });
+    }
+    const r = tl.getBoundingClientRect(); // garis timeline terisi
+    tl.style.setProperty('--tl', Math.min(Math.max((innerHeight * 0.6 - r.top) / r.height, 0), 1));
+    tlItems.forEach(it => it.classList.toggle('on', it.getBoundingClientRect().top < innerHeight * 0.6));
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+  addEventListener('resize', () => { measure(); frame(); });
+  addEventListener('load', () => { measure(); frame(); });
+  measure(); frame();
+
+  /* --- I. KARTU PROYEK MIRING MENGIKUTI KURSOR --- */
+  if (!calm) $$('.card').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--ry', ((e.clientX - r.left) / r.width - 0.5) * 10 + 'deg');
+      card.style.setProperty('--rx', -((e.clientY - r.top) / r.height - 0.5) * 10 + 'deg');
+    });
+    card.addEventListener('pointerleave', () => { card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
+  });
+
+  /* --- J. TOMBOL SALIN ---
+     navigator.clipboard hanya jalan di HTTPS/localhost. Server Debian lewat
+     http://IP biasanya bukan HTTPS, jadi disediakan cadangan dengan execCommand. */
+  function copy(text) {
+    if (navigator.clipboard && isSecureContext) return navigator.clipboard.writeText(text);
+    return new Promise((ok, no) => {
+      const t = d.createElement('textarea');
+      t.value = text; t.setAttribute('readonly', ''); t.className = 'sr-copy';
+      d.body.appendChild(t); t.select();
+      try { d.execCommand('copy') ? ok() : no(); } catch (e) { no(); }
+      t.remove();
+    });
+  }
+  $$('.copy').forEach(btn => btn.addEventListener('click', () => {
+    const label = $('span', btn);
+    copy(btn.dataset.copy).then(() => { label.textContent = 'Tersalin'; btn.classList.add('ok'); },
+      () => { label.textContent = 'Gagal'; })
+      .finally(() => setTimeout(() => { label.textContent = 'Salin'; btn.classList.remove('ok'); }, 1600));
+  }));
+
+  /* --- K. PANEL INFO SERVER & BROWSER (jam, alamat, ukuran layar) --- */
+  const clock = $('#clock'), screenEl = $('#screen');
+  $('#host').textContent = location.host || 'file lokal';
+  $('#proto').textContent = location.protocol.replace(':', '').toUpperCase();
+  const tick = () => { clock.textContent = new Date().toLocaleTimeString('id-ID'); };
+  const size = () => { screenEl.textContent = innerWidth + ' x ' + innerHeight + ' px'; };
+  tick(); size(); setInterval(tick, 1000); addEventListener('resize', size);
+})();
+</script>
+</body>
+</html>
